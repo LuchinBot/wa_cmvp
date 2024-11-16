@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {
@@ -36,5 +39,28 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function username()
+    {
+        return 'usuario';
+    }
+
+    protected function credentials(Request $request)
+    {
+        $credentials= $request->only($this->username(), 'password');
+        return array_merge($credentials, [
+          "baja"=>"N"
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $userId = Auth::id();
+        Cache::forget('user-session-' . $userId);
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 }

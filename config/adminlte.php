@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => env('APP_NAME', 'Laravel'),
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -30,8 +30,8 @@ return [
     |
     */
 
-    'use_ico_only' => false,
-    'use_full_favicon' => false,
+    'use_ico_only' => true,
+    'use_full_favicon' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>CMS</b> CMVSM',
+    'logo_img' => 'app/img/logo_cmvsm.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'app/img/logo_cmvsm.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -113,8 +113,8 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'path' => 'app/img/logo_cmvsm.png',
+            'alt' => 'CMS COLEGIO MEDICO DE VETERINARIOS',
             'effect' => 'animation__shake',
             'width' => 60,
             'height' => 60,
@@ -134,10 +134,10 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
+    'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
-    'usermenu_desc' => false,
+    'usermenu_image' => true,
+    'usermenu_desc' => true,
     'usermenu_profile_url' => false,
 
     /*
@@ -156,7 +156,7 @@ return [
     'layout_boxed' => null,
     'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => null,
+    'layout_fixed_footer' => true,
     'layout_dark_mode' => null,
 
     /*
@@ -174,7 +174,7 @@ return [
     'classes_auth_card' => 'card-outline card-primary',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
-    'classes_auth_footer' => '',
+    'classes_auth_footer' => 'd-none',
     'classes_auth_icon' => '',
     'classes_auth_btn' => 'btn-flat btn-primary',
 
@@ -191,13 +191,13 @@ return [
     */
 
     'classes_body' => '',
-    'classes_brand' => '',
+    'classes_brand' => 'bg-dark',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => '',
+    'classes_sidebar_nav' => 'nav-flat',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
@@ -215,9 +215,9 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
-    'sidebar_collapse_auto_size' => false,
-    'sidebar_collapse_remember' => false,
+    'sidebar_collapse' => true,
+    'sidebar_collapse_auto_size' => true,
+    'sidebar_collapse_remember' => true,
     'sidebar_collapse_remember_no_transition' => true,
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
@@ -257,12 +257,12 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
-    'password_reset_url' => 'password/reset',
-    'password_email_url' => 'password/email',
+    'register_url' => false,
+    'password_reset_url' => false,
+    'password_email_url' => false,
     'profile_url' => false,
     'disable_darkmode_routes' => false,
 
@@ -309,88 +309,207 @@ return [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
+        ['header' => 'CMS CMVSM','active'=>true],
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
+
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-        [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
+            'text'    => 'SISTEMA SEGURIDAD',
+            'icon'    => 'fas fa-fw fa-lock',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'Perfil',
+                    'url'  => 'perfiles',
+                    'icon' => 'fas fa-fw fa-user-secret',
+                ],
+
+                [
+                    'text' => 'Usuario',
+                    'url'  => 'usuarios',
+                    'icon' => 'fas fa-fw fa-user',
                 ],
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'Accesos',
+                    'url'  => 'privilegios',
+                    'icon' => 'fas fa-fw fa-unlock-alt',
                 ],
             ],
         ],
-        ['header' => 'labels'],
         [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
+            'text'    => 'MANTENIMIENTO',
+            'icon'    => 'fas fa-fw fa-folder-open',
+            'submenu' => [
+                [
+                    'text' => 'Estado Civil',
+                    'url'  => 'estado_civil',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Sexo',
+                    'url'  => 'sexos',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Tipo Documento Identidad',
+                    'url'  => 'tipo_documentos_identidad',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Tipo Curso',
+                    'url'  => 'tipo_cursos',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Requisito',
+                    'url'  => 'requisitos',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+            ]
         ],
         [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
+            'text'    => 'GESTOR DE CONTENIDOS',
+            'icon'    => 'fas fa-fw fa-folder-open',
+            'submenu' => [
+                [
+                    'text' => 'Institución',
+                    'url'  => 'empresas',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Slider Principal',
+                    'url'  => 'slider_principal',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Trámites',
+                    'url'  => 'tramites',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Comunicados',
+                    'url'  => 'comunicados',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Pronunciamientos',
+                    'url'  => 'pronunciamientos',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Cursos',
+                    'url'  => 'cursos',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Noticias',
+                    'url'  => 'noticias',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Eventos',
+                    'url'  => 'eventos',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Junta Directiva',
+                    'url'  => 'juntas_directivas',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Documentos Normativos',
+                    'url'  => 'documentos_normativos',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Bolsa de trabajo',
+                    'url'  => 'bolsa_trabajos',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Actividades Institucionales',
+                    'url'  => 'actividad_institucional',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+            ],
         ],
         [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'text'    => 'TRANSACCIONAL',
+            'icon'    => 'fas fa-fw fa-desktop',
+            'submenu' => [
+                [
+                    'text' => 'Colegiado',
+                    'url'  => 'colegiados',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Caja',
+                    'url'  => 'cajas',
+                    'icon' => 'fas fa-fw fa-box',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'MESA DE PARTES VIRTUAL',
+            'icon'    => 'fas fa-fw fa-id-card',
+            'submenu' => [
+                [
+                    'text' => 'Recibidos',
+                    'url'  => 'documentos_recibidos',
+                    'icon' => 'fas fa-fw fa-folder',
+                ],
+                [
+                    'text' => 'Respondidos',
+                    'url'  => 'documentos_recibidos',
+                    'icon' => 'fas fa-fw fa-folder-open',
+                ],
+            ],
+        ],
+        /*
+        [
+            'text'    => 'LIBRO DE RECLAMACIONES',
+            'icon'    => 'fas fa-fw fa-balance-scale',
+            'submenu' => [
+                [
+                    'text' => 'Recibidos',
+                    'url'  => 'reclamos_recibidos',
+                    'icon' => 'fas fa-fw fa-folder',
+                ],
+                [
+                    'text' => 'Archivados',
+                    'url'  => 'reclamos_archivados',
+                    'icon' => 'fas fa-fw fa-archive',
+                ],
+            ],
+        ],
+        */
+        [
+            'text'    => 'COLEGIADO',
+            'icon'    => 'fas fa-fw fa-graduation-cap',
+            'submenu' => [
+                [
+                    'text' => 'Mis Datos',
+                    'url'  => 'colegiado_datos_principales',
+                    'icon' => 'fas fa-fw fa-address-card',
+                ],
+                [
+                    'text' => 'Mi Curriculum',
+                    'url'  => 'colegiado_cv',
+                    'icon' => 'fas fa-fw fa-file',
+                ],
+                [
+                    'text' => 'Cuotas Mensuales',
+                    'url'  => 'colegiado_cuotas_mensuales',
+                    'icon' => 'fas fa-fw fa-list-alt',
+                ],
+                [
+                    'text' => 'Multas Pendientes',
+                    'url'  => 'colegiado_multas_pendientes',
+                    'icon' => 'fas fa-fw fa-list-alt',
+                ],
+            ],
         ],
     ],
 
@@ -429,6 +548,41 @@ return [
     */
 
     'plugins' => [
+        'Generales' => [
+            "active" => true,
+            "files"=>[
+                [
+                    "type"=>"js",
+                    "asset"=>true,
+                    "location"=>("js/plugins/jquery-ui.min.js")
+                ],
+                [
+                    "type"=>"js",
+                    "asset"=>true,
+                    "location"=>("js/plugins/autoComplete.min.js")
+                ],
+                [
+                    "type"=>"js",
+                    "asset"=>true,
+                    "location"=>("js/funciones.js")
+                ],
+                [
+                    "type"=>"js",
+                    "asset"=>true,
+                    "location"=>("js/required.js")
+                ],
+                [
+                    "type"=>"css",
+                    "asset"=>true,
+                    "location"=>"css/my_style.css"
+                ],
+                [
+                    "type"=>"css",
+                    "asset"=>true,
+                    "location"=>("css/plugins/autoComplete.css")
+                ],
+            ]
+        ],
         'Datatables' => [
             'active' => false,
             'files' => [
@@ -464,38 +618,73 @@ return [
                 ],
             ],
         ],
-        'Chartjs' => [
-            'active' => false,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
-                ],
-            ],
-        ],
         'Sweetalert2' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/plugins/sweetalert2@8.js',
+                ],
+            ],
+        ],
+        'Dropzone' => [
             'active' => false,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'asset' => true,
+                    'location' => 'js/plugins/dropzone.min.js',
                 ],
-            ],
-        ],
-        'Pace' => [
-            'active' => false,
-            'files' => [
                 [
                     'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
+                    'asset' => true,
+                    'location' => 'css/plugins/dropzone.min.css',
                 ],
+            ],
+        ],
+        'Summernote' => [
+            'active' => false,
+            'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/summernote/summernote.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/summernote/summernote.min.css',
+                ],
+            ],
+        ],
+        'Toastr' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/toastr/toastr.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/toastr/toastr.min.css',
+                ],
+            ],
+        ],
+        'waitMe' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/plugins/waitMe.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'css/plugins/waitMe.min.css',
                 ],
             ],
         ],
