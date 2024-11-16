@@ -162,6 +162,12 @@ Route::group(["middleware"=>"auth"], function(){
     Route::post('cajas/store', [App\Http\Controllers\CajaController::class, 'store'])->name('cajas.store');
     Route::get('cajas/{id}/edit',[App\Http\Controllers\CajaController::class, 'edit'])->name('cajas.edit');
     Route::delete('cajas/{id}/destroy',[App\Http\Controllers\CajaController::class, 'destroy'])->name('cajas.destroy');
+    
+    Route::get('ventas', [App\Http\Controllers\VentaController::class, 'index'])->name('ventas');
+    Route::get('ventas/grilla', [App\Http\Controllers\VentaController::class, 'grilla'])->name('ventas.grilla');
+    Route::post('ventas/store', [App\Http\Controllers\VentaController::class, 'store'])->name('ventas.store');
+    Route::get('ventas/{id}/edit',[App\Http\Controllers\VentaController::class, 'edit'])->name('ventas.edit');
+    Route::delete('ventas/{id}/destroy',[App\Http\Controllers\VentaController::class, 'destroy'])->name('ventas.destroy');
 
 });
 

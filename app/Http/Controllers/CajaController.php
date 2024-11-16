@@ -53,7 +53,7 @@ class CajaController extends Controller
 
     public function grilla()
     {
-        $objeto = Caja::with(["usuario", "tipo_caja"])->get();
+        $objeto = Caja::with(["usuario_apertura", "tipo_caja"])->get();
         return  DataTables::of($objeto)
             ->addIndexColumn()
             ->addColumn("estado", function ($row) {
@@ -69,31 +69,42 @@ class CajaController extends Controller
     {
         // Obtener el usuario logueado
         $usuario = Auth::id();
-
-        $cajaAbierta = Caja::where('estado', 1)
-            ->where('idtipo_caja', $request->input('idtipo_caja'))
+        $cajaPrincipal = Caja::where('estado', 1)
+            ->where('idtipo_caja', 2)
             ->first();
+        if ($cajaPrincipal || $request->input('idtipo_caja') == 2) {
+            $cajaAbierta = Caja::where('estado', 1)
+                ->where('codusuario_apertura', $usuario)
+                ->where('idtipo_caja', $request->input('idtipo_caja'))
+                ->first();
 
-        if ($cajaAbierta) {
+            if ($cajaAbierta) {
+                return response()->json([
+                    'message' => 'Ya existe una caja abierta con este tipo.',
+                    'caja_abierta' => $cajaAbierta
+                ], 400);
+            }
+        }else{
             return response()->json([
-                'message' => 'Ya existe una caja abierta con este tipo.',
-                'caja_abierta' => $cajaAbierta
+                'message' => 'La caja principal no está abierta.',
+                'caja_abierta' => $cajaPrincipal
             ], 400);
         }
 
+
         // Validar los datos enviados
         $this->validate($request, [
-            'monto_apertura' => ["required", "numeric", "min:0.5"]
+            'monto_apertura' => ["required", "numeric", "min:0"]
         ], [
             "monto_apertura.required" => "El monto de apertura es obligatorio.",
-            "monto_apertura.min" => "El monto de apertura debe ser al menos 0.5."
+            "monto_apertura.min" => "El monto de apertura debe ser al menos 0."
         ]);
         $date = Carbon::now();
         $obj = Caja::find($request->input("cod{$this->name_table}"));
         if (is_null($obj)) {
             $obj = new Caja();
             $obj->estado = 1;
-            $obj->codusuario = $usuario;
+            $obj->codusuario_apertura = $usuario;
             $obj->fecha_apertura = $date;
         }
 

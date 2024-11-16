@@ -16,6 +16,8 @@ class CreateTipoCajaTable extends Migration
         Schema::create('tipo_caja', function (Blueprint $table) {
             $table->increments('idtipo_caja');
             $table->string('nombre', 50);
+            $table->chat('ver_en_recibo_ingreso', 50);
+            $table->chat('ver_en_recibo_egreso', 50);
             $table->timestamps();
             $table->softDeletes();
         });

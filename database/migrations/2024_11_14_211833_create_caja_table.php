@@ -15,7 +15,8 @@ class CreateCajaTable extends Migration
     {
         Schema::create('caja', function (Blueprint $table) {
             $table->increments("codcaja");
-            $table->integer("codusuario");
+            $table->integer("codusuario_apertura")->nullable();
+            $table->integer("codusuario_cierre")->nullable();
             $table->integer('idtipo_caja');
             $table->date('fecha_apertura');
             $table->date('fecha_cierra')->nullable();
