@@ -53,7 +53,7 @@ class CajaController extends Controller
 
     public function grilla()
     {
-        $objeto = Caja::with(["usuario","tipo_caja"])->get();
+        $objeto = Caja::with(["usuario", "tipo_caja"])->get();
         return  DataTables::of($objeto)
             ->addIndexColumn()
             ->addColumn("estado", function ($row) {
@@ -92,7 +92,7 @@ class CajaController extends Controller
         $obj = Caja::find($request->input("cod{$this->name_table}"));
         if (is_null($obj)) {
             $obj = new Caja();
-            $obj->estado = 1; 
+            $obj->estado = 1;
             $obj->codusuario = $usuario;
             $obj->fecha_apertura = $date;
         }
@@ -112,7 +112,8 @@ class CajaController extends Controller
     public function destroy($id)
     {
         $obj    =   Caja::findOrFail($id);
-        $obj->delete();
-        return response()->json();
+        $obj->estado = 0;
+        $obj->save();
+        return response()->json($obj);
     }
 }

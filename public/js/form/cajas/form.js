@@ -70,7 +70,7 @@ form.register(_path_controller_caja, {
         var $self = this;
         ventana.confirm({
 			titulo:"Confirmar"
-			,mensaje:"¿Desea eliminar el registro seleccionado?"
+			,mensaje:"¿Desea cerrar la caja seleccionada?"
 			,textoBotonAceptar: "Eliminar"
 		}, function(ok){
 			if(ok) {
@@ -81,7 +81,7 @@ form.register(_path_controller_caja, {
                         loading();
                     },
                     success: function(response) {
-                        toastr.success('Datos grabados correctamente.','Notificación '+_name_module_caja);
+                        toastr.success('Caja cerra exitosamente.','Notificación '+_name_module_caja);
                         $self.callback(response);
                     },
                     complete: function () {
