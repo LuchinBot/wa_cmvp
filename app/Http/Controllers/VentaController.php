@@ -56,8 +56,13 @@ class VentaController extends Controller
 
     public function grilla()
     {
-        $objeto = Venta::get();
-        return  DataTables::of($objeto)->addIndexColumn()->make(true);
+        $objeto = Venta::select('venta.*', 'tipo_caja.nombre as tipo_caja')
+        ->join('caja', 'venta.codcaja', '=', 'caja.codcaja')
+        ->join('tipo_caja', 'caja.idtipo_caja', '=', 'tipo_caja.idtipo_caja')
+        ->get();
+        return DataTables::of($objeto)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function store(Request $request)
@@ -67,12 +72,12 @@ class VentaController extends Controller
         $date = Carbon::now();
         $cajaAbierta = '';
 
-        if($request->input('idtipo_caja') == 1){
+        if ($request->input('idtipo_caja') == 1) {
             $cajaAbierta = Caja::where('estado', 1)
-            ->where('idtipo_caja', $request->input('idtipo_caja'))
-            ->where('codusuario', $usuario)
-            ->first();
-        }else{
+                ->where('idtipo_caja', $request->input('idtipo_caja'))
+                ->where('codusuario_apertura', $usuario)
+                ->first();
+        } else {
             $cajaAbierta = Caja::where('estado', 1)->first();
         }
 
@@ -81,39 +86,39 @@ class VentaController extends Controller
             $obj = Venta::find($request->input("id{$this->name_table}"));
             if (is_null($obj)) {
                 $obj = new Venta();
-                $obj->idcaja = $cajaAbierta->codcaja;
+                $obj->codcaja = $cajaAbierta->codcaja;
                 $obj->total = 100;
                 $obj->fecha = $date;
             }
-    
+
             $obj->fill($request->all());
-            if($obj->save()){
+            if ($obj->save()) {
                 $arrDetallVenta = [];
-                if($request->filled("detalle_venta")){
-                    foreach($request->input("detalle_venta") as $key=>$value){
-                        if(!empty($value['idddetalle_venta']))
+                if ($request->filled("detalle_venta")) {
+                    foreach ($request->input("detalle_venta") as $key => $value) {
+                        if (!empty($value['idddetalle_venta']))
                             $detalle    = DetalleVenta::find($value['idddetalle_venta']);
                         else
                             $detalle    = new DetalleVenta();
-    
+
                         $detalle->idventa    = $obj->idventa;
                         $detalle->idproducto  = $value['idproducto'];
                         $detalle->cantidad    = 1;
                         $detalle->save();
-    
+
                         $arrDetallVenta[]        = $detalle->iddetalle_venta;
                     }
                 }
-    
+
                 DetalleVenta::where("idventa", $obj->idventa)->whereNotIn("iddetalle_venta", $arrDetallVenta)->delete();
             }
-        } else{
+        } else {
             return response()->json([
                 'message' => 'No existe una caja abierta con este tipo.',
                 'caja_abierta' => $cajaAbierta
             ], 400);
         }
-        
+
 
         return response()->json($obj);
     }

@@ -7,19 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Venta extends Model
 {
-    protected $table        = "venta";
-    protected $primaryKey   = "idventa";
+    protected $table = "venta";
+    protected $primaryKey = "idventa";
+    protected $fillable = ["codcaja", "total", "fecha"];
 
-    protected $fillable     = ["idcaja", "total","fecha" ];
     public function caja()
     {
-        return $this->belongsTo(Caja::class,'idcaja');
+        return $this->belongsTo(Caja::class, 'codcaja', 'codcaja');
     }
-    public function getColumnDataTable(){
+
+    public function tipo_caja()
+    {
+        return $this->belongsTo(TipoCaja::class, 'idtipo_caja', 'idtipo_caja');
+    }
+
+    public function getColumnDataTable()
+    {
         return [
-            ["descripcion"=>"#"         ,"ancho"=>"05%", "jsColumn"=>["data"=>"DT_RowIndex", "orderable"=>false, "searchable"=>false, "className"=>"text-center"]]
-           ,["descripcion"=>"Fecha venta"     ,"ancho"=>"20%%", "jsColumn"=>["data"=>"fecha"]]
-           ,["descripcion"=>"Monto total"     ,"ancho"=>"40%", "jsColumn"=>["data"=>"total"]]
-       ];
+            ["descripcion" => "#", "ancho" => "5%", "jsColumn" => ["data" => "DT_RowIndex", "orderable" => false, "searchable" => false, "className" => "text-center"]],
+            ["descripcion" => "Caja", "ancho" => "20%", "jsColumn" => ["data" => "tipo_caja"]],
+            ["descripcion" => "Fecha venta", "ancho" => "20%", "jsColumn" => ["data" => "fecha"]],
+            ["descripcion" => "Monto total", "ancho" => "40%", "jsColumn" => ["data" => "total"]],
+        ];
     }
 }

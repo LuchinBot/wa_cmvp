@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 
 use Yajra\DataTables\DataTables;
 use App\Actions\DataTableInternal;
+use App\Models\Venta;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
@@ -53,7 +54,9 @@ class CajaController extends Controller
 
     public function grilla()
     {
-        $objeto = Caja::with(["usuario_apertura", "tipo_caja"])->get();
+        // Obtener el usuario logueado
+        $usuario = Auth::id();
+        $objeto = Caja::with(["usuario_apertura", "tipo_caja"])->where('codusuario_apertura', $usuario)->get();
         return  DataTables::of($objeto)
             ->addIndexColumn()
             ->addColumn("estado", function ($row) {
@@ -69,36 +72,37 @@ class CajaController extends Controller
     {
         // Obtener el usuario logueado
         $usuario = Auth::id();
-        $cajaPrincipal = Caja::where('estado', 1)
-            ->where('idtipo_caja', 2)
-            ->first();
-        if ($cajaPrincipal || $request->input('idtipo_caja') == 2) {
-            $cajaAbierta = Caja::where('estado', 1)
-                ->where('codusuario_apertura', $usuario)
-                ->where('idtipo_caja', $request->input('idtipo_caja'))
+        if ($request->input('idtipo_caja') == 2) {
+            $cajaPrincipal = Caja::where('estado', 1)
+                ->where('idtipo_caja', 2)
                 ->first();
-
-            if ($cajaAbierta) {
+            // Si hay una caja principal abierta
+            if ($cajaPrincipal) {
                 return response()->json([
                     'message' => 'Ya existe una caja abierta con este tipo.',
-                    'caja_abierta' => $cajaAbierta
+                    'caja_abierta' => $cajaPrincipal
                 ], 400);
             }
-        }else{
-            return response()->json([
-                'message' => 'La caja principal no está abierta.',
-                'caja_abierta' => $cajaPrincipal
-            ], 400);
+        } else {
+            $cajaPrincipal = Caja::where('estado', 1)
+                ->where('idtipo_caja', 2)
+                ->first();
+            // Si no hay una caja principal abierta
+            if (!$cajaPrincipal) {
+                return response()->json([
+                    'message' => 'La caja principal no está abierta.',
+                    'caja_abierta' => $cajaPrincipal
+                ], 400);
+            }
         }
 
-
-        // Validar los datos enviados
         $this->validate($request, [
             'monto_apertura' => ["required", "numeric", "min:0"]
         ], [
             "monto_apertura.required" => "El monto de apertura es obligatorio.",
             "monto_apertura.min" => "El monto de apertura debe ser al menos 0."
         ]);
+
         $date = Carbon::now();
         $obj = Caja::find($request->input("cod{$this->name_table}"));
         if (is_null($obj)) {
@@ -122,9 +126,33 @@ class CajaController extends Controller
 
     public function destroy($id)
     {
-        $obj    =   Caja::findOrFail($id);
-        $obj->estado = 0;
-        $obj->save();
-        return response()->json($obj);
+        $usuario = Auth::id();
+        $date = Carbon::now();
+    
+        // Calcular el monto total de cierre de esa caja
+        $ventas = Venta::where('idcaja', $id)->get();
+        $total = $ventas->sum('total');
+    
+        // Verificar si hay ventas
+        if ($ventas->isEmpty()) {
+            return response()->json([
+                'message' => 'No existen ventas en la caja.',
+                'ventas' => ''
+            ], 400);
+        }
+    
+        try {
+            // Subir los cambios del cierre
+            $obj = Caja::findOrFail($id);
+            $obj->estado = 0;
+            $obj->codusuario_cierre = $usuario;
+            $obj->fecha_cierra = $date;
+            $obj->monto_cierre = $total;
+            $obj->save();
+    
+            return response()->json($obj);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al cerrar la caja: ' . $e->getMessage()], 500);
+        }
     }
 }
