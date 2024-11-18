@@ -10,7 +10,7 @@ class TipoCaja extends Model
     use SoftDeletes;
 
     protected $table        = "tipo_caja";
-    protected $primaryKey   = "idtipo_caja";
+    protected $primaryKey   = "codtipo_caja";
 
     protected $fillable     = ["nombre"];
     protected $hidden       = ['created_at', 'updated_at', "deleted_at"];

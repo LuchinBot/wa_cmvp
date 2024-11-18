@@ -11,7 +11,7 @@ class Caja extends Model
     protected $table        = "caja";
     protected $primaryKey   = "codcaja";
 
-    protected $fillable     = ["codusuario_apertura", "codusuario_cierre", "idtipo_caja", "fecha_apertura","fecha_cierra","monto_apertura","monto_cierre","estado"];
+    protected $fillable     = ["codusuario_apertura", "codusuario_cierre", "idtipo_caja", "fecha_apertura","fecha_cierre","monto_apertura","monto_cierre","estado"];
     protected $hidden       = ['created_at', 'updated_at', "deleted_at"];
 
     public function usuario_apertura()
@@ -30,12 +30,11 @@ class Caja extends Model
     public function getColumnDataTable(){
         return [
             ["descripcion"=>"#"         ,"ancho"=>"05%", "jsColumn"=>["data"=>"DT_RowIndex", "orderable"=>false, "searchable"=>false, "className"=>"text-center"]]
-           ,["descripcion"=>"Tipo"     ,"ancho"=>"10%%", "jsColumn"=>["data"=>"tipo_caja.nombre"]]
            ,["descripcion"=>"Usuario"     ,"ancho"=>"10%", "jsColumn"=>["data"=>"usuario_apertura.usuario"]]
-           ,["descripcion"=>"F. Apertura"     ,"ancho"=>"20%", "jsColumn"=>["data"=>"fecha_apertura"]]
            ,["descripcion"=>"M. Apertura"     ,"ancho"=>"20%", "jsColumn"=>["data"=>"monto_apertura"]]
+           ,["descripcion"=>"M. Actual"     ,"ancho"=>"20%", "jsColumn"=>["data"=>"monto_cierre"]]
+           ,["descripcion"=>"F. Apertura"     ,"ancho"=>"20%", "jsColumn"=>["data"=>"fecha_apertura"]]
            ,["descripcion"=>"F. Cierre"     ,"ancho"=>"20%", "jsColumn"=>["data"=>"fecha_cierre"]]
-           ,["descripcion"=>"M. Cierre"     ,"ancho"=>"20%", "jsColumn"=>["data"=>"monto_cierre"]]
            ,["descripcion"=>"Estado"       ,"ancho"=>"15%", "jsColumn"=>["data"=>"estado", "orderable"=>false, "searchable"=>false]]
        ];
     }

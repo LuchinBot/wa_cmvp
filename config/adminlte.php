@@ -449,6 +449,11 @@ return [
                     'url'  => 'cajas',
                     'icon' => 'fas fa-fw fa-box',
                 ],
+                [
+                    'text' => 'Caja principal',
+                    'url'  => 'cajas_principal',
+                    'icon' => 'fas fa-fw fa-box',
+                ],
             ],
         ],
         [

@@ -14,10 +14,10 @@ class CreateTipoCajaTable extends Migration
     public function up()
     {
         Schema::create('tipo_caja', function (Blueprint $table) {
-            $table->increments('idtipo_caja');
+            $table->increments('codtipo_caja');
             $table->string('nombre', 50);
-            $table->chat('ver_en_recibo_ingreso', 50);
-            $table->chat('ver_en_recibo_egreso', 50);
+            $table->char('ver_en_recibo_ingreso', 10);
+            $table->char('ver_en_recibo_egreso', 10);
             $table->timestamps();
             $table->softDeletes();
         });

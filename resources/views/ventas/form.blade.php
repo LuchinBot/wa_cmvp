@@ -9,10 +9,10 @@
                         <div class="col-md-6">
                             <label class="required">Tipo de caja </label>
                             <div class="input-group input-group-xs">
-                                <select class="form-control pt-2 pb-2" name="idtipo_caja"
-                                    id="idtipo_caja{{ $prefix }}">
+                                <select class="form-control pt-2 pb-2" name="codtipo_caja"
+                                    id="codtipo_caja{{ $prefix }}">
                                     @foreach ($tipo_caja as $item)
-                                        <option value="{{ $item->idtipo_caja }}">{{ $item->nombre }}</option>
+                                        <option value="{{ $item->codtipo_caja }}">{{ $item->nombre }}</option>
                                     @endforeach
                                 </select>
                             </div>

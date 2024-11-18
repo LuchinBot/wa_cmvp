@@ -57,9 +57,9 @@ class VentaController extends Controller
     public function grilla()
     {
         $objeto = Venta::select('venta.*', 'tipo_caja.nombre as tipo_caja')
-        ->join('caja', 'venta.codcaja', '=', 'caja.codcaja')
-        ->join('tipo_caja', 'caja.idtipo_caja', '=', 'tipo_caja.idtipo_caja')
-        ->get();
+            ->join('caja', 'venta.codcaja', '=', 'caja.codcaja')
+            ->join('tipo_caja', 'caja.codtipo_caja', '=', 'tipo_caja.codtipo_caja')
+            ->get();
         return DataTables::of($objeto)
             ->addIndexColumn()
             ->make(true);
@@ -72,13 +72,13 @@ class VentaController extends Controller
         $date = Carbon::now();
         $cajaAbierta = '';
 
-        if ($request->input('idtipo_caja') == 1) {
+        if ($request->input('codtipo_caja') == 1) {
+            $cajaAbierta = Caja::where('estado', 1)->first();
+        } else {
             $cajaAbierta = Caja::where('estado', 1)
-                ->where('idtipo_caja', $request->input('idtipo_caja'))
+                ->where('codtipo_caja', 2)
                 ->where('codusuario_apertura', $usuario)
                 ->first();
-        } else {
-            $cajaAbierta = Caja::where('estado', 1)->first();
         }
 
         if ($cajaAbierta) {
@@ -90,6 +90,8 @@ class VentaController extends Controller
                 $obj->total = 100;
                 $obj->fecha = $date;
             }
+            $cajaAbierta->monto_cierre = $cajaAbierta->monto_cierre + 100;
+            $cajaAbierta->save();
 
             $obj->fill($request->all());
             if ($obj->save()) {
@@ -114,7 +116,7 @@ class VentaController extends Controller
             }
         } else {
             return response()->json([
-                'message' => 'No existe una caja abierta con este tipo.',
+                'message' => 'No existe una caja abierta con este tipo.' . $request->input('idtipo_caja'),
                 'caja_abierta' => $cajaAbierta
             ], 400);
         }
@@ -128,11 +130,29 @@ class VentaController extends Controller
     {
         //
     }
-
     public function destroy($id)
     {
-        $obj    =   Venta::findOrFail($id);
-        $obj->delete();
-        return response()->json($obj);
+        $obj = Venta::findOrFail($id);
+        $importe = $obj->total;
+        $CajaAfectada = Caja::findOrFail($obj->codcaja);
+        if ($CajaAfectada->estado == 1) {
+
+            if ($CajaAfectada->monto_cierre >= $importe) {
+                // Actualizar monto de cierre
+                $CajaAfectada->monto_cierre -= $importe;
+                $CajaAfectada->save();
+                $obj->delete();
+
+                return response()->json($obj);
+            } else {
+                return response()->json([
+                    'message' => 'No hay suficiente saldo en la caja para revertir esta venta.'
+                ], 400);
+            }
+        } else {
+            return response()->json([
+                'message' => 'La Caja no está abierta.'
+            ], 400);
+        }
     }
 }

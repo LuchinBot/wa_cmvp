@@ -17,10 +17,10 @@ use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 
 
-class CajaController extends Controller
+class CajaPrincipalController extends Controller
 {
-    public $modulo                  = "Caja";
-    public $path_controller         = "cajas";
+    public $modulo                  = "Caja Principal";
+    public $path_controller         = "cajas_principal";
 
     public $model                   = null;
     public $name_table              = "";
@@ -55,7 +55,7 @@ class CajaController extends Controller
     public function grilla()
     {
         $usuario = Auth::id();
-        $objeto = Caja::with(["usuario_apertura"])->where('codusuario_apertura', $usuario)->where('codtipo_caja', 2)->get();
+        $objeto = Caja::with(["usuario_apertura", "tipo_caja"])->where('codtipo_caja', 1)->get();
         return  DataTables::of($objeto)
             ->addIndexColumn()
             ->addColumn("estado", function ($row) {
@@ -70,30 +70,17 @@ class CajaController extends Controller
     public function store(Request $request)
     {
         $usuario = Auth::id();
-        // Caja principal
         $cajaPrincipal = Caja::where('estado', 1)
             ->where('codtipo_caja', 1)
             ->first();
-        if (!$cajaPrincipal) {
+        // Si hay una caja principal abierta
+        if ($cajaPrincipal) {
             return response()->json([
-                'message' => 'No existe una caja principal abierta.',
+                'message' => 'Ya existe una caja principal abierta.',
                 'caja_abierta' => $cajaPrincipal
             ], 400);
         }
 
-        // Caja chica
-        $cajaChica = Caja::where('estado', 1)
-            ->where('codtipo_caja', 2)
-            ->where('codusuario_apertura', $usuario)
-            ->first();
-        if ($cajaChica) {
-            return response()->json([
-                'message' => 'Ya existe una caja chica abierta.',
-                'caja_abierta' => $cajaChica
-            ], 400);
-        }
-
-        // Validador
         $this->validate($request, [
             'monto_apertura' => ["required", "numeric", "min:0"]
         ], [
@@ -103,14 +90,14 @@ class CajaController extends Controller
 
         $date = Carbon::now();
         $monto_actual = $request->input("monto_apertura");
-        
+
         $obj = Caja::find($request->input("cod{$this->name_table}"));
         if (is_null($obj)) {
             $obj = new Caja();
             $obj->estado = 1;
             $obj->codusuario_apertura = $usuario;
             $obj->monto_cierre = $monto_actual;
-            $obj->codtipo_caja = 2;
+            $obj->codtipo_caja = 1;
             $obj->fecha_apertura = $date;
         }
 
@@ -131,7 +118,7 @@ class CajaController extends Controller
         $usuario = Auth::id();
         $date = Carbon::now();
 
-        /* Calcular el monto total de cierre de esa caja
+        // Calcular el monto total de cierre de esa caja
         $ventas = Venta::where('codcaja', $id)->get();
         $total = $ventas->sum('total');
 
@@ -142,14 +129,14 @@ class CajaController extends Controller
                 'ventas' => ''
             ], 400);
         }
-        */
 
         try {
+            // Subir los cambios del cierre
             $obj = Caja::findOrFail($id);
             $obj->estado = 0;
             $obj->codusuario_cierre = $usuario;
-            $obj->fecha_cierre = $date;
-            //$obj->monto_cierre = $total;
+            $obj->fecha_cierra = $date;
+            $obj->monto_cierre = $total;
             $obj->save();
 
             return response()->json($obj);

@@ -28,7 +28,7 @@ Route::group(["middleware"=>"auth"], function(){
     Route::post('perfiles/store', [App\Http\Controllers\PerfilController::class, 'store'])->name('perfiles.store');
     Route::get('perfiles/{id}/edit',[App\Http\Controllers\PerfilController::class, 'edit'])->name('perfiles.edit');
     Route::delete('perfiles/{id}/destroy',[App\Http\Controllers\PerfilController::class, 'destroy'])->name('perfiles.destroy');
-
+/*
     Route::get('estado_civil', [App\Http\Controllers\EstadoCivilController::class, 'index'])->name('estado_civil');
     Route::get('estado_civil/grilla', [App\Http\Controllers\EstadoCivilController::class, 'grilla'])->name('estado_civil.grilla');
     Route::post('estado_civil/store', [App\Http\Controllers\EstadoCivilController::class, 'store'])->name('estado_civil.store');
@@ -46,7 +46,7 @@ Route::group(["middleware"=>"auth"], function(){
     Route::post('tipo_documentos_identidad/store', [App\Http\Controllers\TipoDocumentoIdentidadController::class, 'store'])->name('tipo_documentos_identidad.store');
     Route::get('tipo_documentos_identidad/{id}/edit',[App\Http\Controllers\TipoDocumentoIdentidadController::class, 'edit'])->name('tipo_documentos_identidad.edit');
     Route::delete('tipo_documentos_identidad/{id}/destroy',[App\Http\Controllers\TipoDocumentoIdentidadController::class, 'destroy'])->name('tipo_documentos_identidad.destroy');
-
+*/
     Route::get('tipo_cursos', [App\Http\Controllers\TipoCursoController::class, 'index'])->name('tipo_cursos');
     Route::get('tipo_cursos/grilla', [App\Http\Controllers\TipoCursoController::class, 'grilla'])->name('tipo_cursos.grilla');
     Route::post('tipo_cursos/store', [App\Http\Controllers\TipoCursoController::class, 'store'])->name('tipo_cursos.store');
@@ -162,6 +162,12 @@ Route::group(["middleware"=>"auth"], function(){
     Route::post('cajas/store', [App\Http\Controllers\CajaController::class, 'store'])->name('cajas.store');
     Route::get('cajas/{id}/edit',[App\Http\Controllers\CajaController::class, 'edit'])->name('cajas.edit');
     Route::delete('cajas/{id}/destroy',[App\Http\Controllers\CajaController::class, 'destroy'])->name('cajas.destroy');
+
+    Route::get('cajas_principal', [App\Http\Controllers\CajaPrincipalController::class, 'index'])->name('cajas_principal');
+    Route::get('cajas_principal/grilla', [App\Http\Controllers\CajaPrincipalController::class, 'grilla'])->name('cajas_principal.grilla');
+    Route::post('cajas_principal/store', [App\Http\Controllers\CajaPrincipalController::class, 'store'])->name('cajas_principal.store');
+    Route::get('cajas_principal/{id}/edit',[App\Http\Controllers\CajaPrincipalController::class, 'edit'])->name('cajas_principal.edit');
+    Route::delete('cajas_principal/{id}/destroy',[App\Http\Controllers\CajaPrincipalController::class, 'destroy'])->name('cajas_principal.destroy');
     
     Route::get('ventas', [App\Http\Controllers\VentaController::class, 'index'])->name('ventas');
     Route::get('ventas/grilla', [App\Http\Controllers\VentaController::class, 'grilla'])->name('ventas.grilla');
