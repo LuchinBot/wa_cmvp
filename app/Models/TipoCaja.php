@@ -12,7 +12,7 @@ class TipoCaja extends Model
     protected $table        = "tipo_caja";
     protected $primaryKey   = "codtipo_caja";
 
-    protected $fillable     = ["nombre"];
+    protected $fillable     = ["descripcion"];
     protected $hidden       = ['created_at', 'updated_at', "deleted_at"];
 
 }

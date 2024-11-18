@@ -1,25 +1,25 @@
 dialog.create({
-    selector: "#form-" + _path_controller_cajas_principal,
-    title: "Registrar " + _name_module_caja,
+    selector: "#form-" + _path_controller_producto,
+    title: "Registrar " + _name_module_producto,
     width: "modal-md",
     style: "primary",
     closeOnEscape: true,
     buttons: {
         Guardar: function () {
-            form.get(_path_controller_cajas_principal).guardar();
+            form.get(_path_controller_producto).guardar();
         },
         Cancelar: function () {
-            form.get(_path_controller_cajas_principal).cancelar();
+            form.get(_path_controller_producto).cancelar();
         },
     },
     close: function () {
-        form.get(_path_controller_cajas_principal).reset();
+        form.get(_path_controller_producto).reset();
     },
 });
 
-form.register(_path_controller_cajas_principal, {
+form.register(_path_controller_producto, {
     _prefix: "",
-    _form: "#form-" + _path_controller_cajas_principal,
+    _form: "#form-" + _path_controller_producto,
 
     nuevo: function () {
         limpieza_caja(this._form);
@@ -31,7 +31,7 @@ form.register(_path_controller_cajas_principal, {
     editar: function (id) {
         var $self = this;
         $.ajax({
-            url: route(_path_controller_cajas_principal + ".edit", id),
+            url: route(_path_controller_producto + ".edit", id),
             type: "GET",
             beforeSend: function () {
                 loading();
@@ -92,10 +92,7 @@ form.register(_path_controller_cajas_principal, {
             function (ok) {
                 if (ok) {
                     $.ajax({
-                        url: route(
-                            _path_controller_cajas_principal + ".destroy",
-                            id
-                        ),
+                        url: route(_path_controller_producto + ".destroy", id),
                         type: "DELETE",
                         beforeSend: function () {
                             loading();
@@ -103,7 +100,7 @@ form.register(_path_controller_cajas_principal, {
                         success: function (response) {
                             toastr.success(
                                 "Caja cerra exitosamente.",
-                                "Notificación " + _name_module_caja
+                                "Notificación " + _name_module_producto
                             );
                             $self.callback(response);
                         },
@@ -139,7 +136,7 @@ form.register(_path_controller_cajas_principal, {
             let post_data = new FormData($($self._form)[0]);
             console.log(post_data);
             $.ajax({
-                url: route(_path_controller_cajas_principal + ".store"),
+                url: route(_path_controller_producto + ".store"),
                 type: "POST",
                 data: post_data,
                 cache: false,
@@ -151,7 +148,7 @@ form.register(_path_controller_cajas_principal, {
                 success: function (response) {
                     toastr.success(
                         "Datos grabados correctamente.",
-                        "Notificación " + _name_module_caja
+                        "Notificación " + _name_module_producto
                     );
                     $self.callback(response);
                     dialog.close($self._form);
@@ -200,7 +197,7 @@ form.register(_path_controller_cajas_principal, {
 });
 
 limpieza_caja = (id) => {
-    id = id || "#form-" + _path_controller_cajas_principal;
+    id = id || "#form-" + _path_controller_producto;
 
     $(id + " span.error_text_o_o").addClass("d-none");
     $(id + " input").removeClass("is-invalid");

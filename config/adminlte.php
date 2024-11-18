@@ -445,6 +445,11 @@ return [
                     'icon' => 'fas fa-fw fa-list',
                 ],
                 [
+                    'text' => 'Productos',
+                    'url'  => 'productos',
+                    'icon' => 'fas fa-fw fa-box',
+                ],
+                [
                     'text' => 'Caja',
                     'url'  => 'cajas',
                     'icon' => 'fas fa-fw fa-box',

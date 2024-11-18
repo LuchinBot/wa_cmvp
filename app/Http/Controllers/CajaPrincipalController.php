@@ -117,7 +117,7 @@ class CajaPrincipalController extends Controller
     {
         $usuario = Auth::id();
         $date = Carbon::now();
-
+        /*
         // Calcular el monto total de cierre de esa caja
         $ventas = Venta::where('codcaja', $id)->get();
         $total = $ventas->sum('total');
@@ -129,14 +129,14 @@ class CajaPrincipalController extends Controller
                 'ventas' => ''
             ], 400);
         }
-
+            */
         try {
             // Subir los cambios del cierre
             $obj = Caja::findOrFail($id);
             $obj->estado = 0;
             $obj->codusuario_cierre = $usuario;
-            $obj->fecha_cierra = $date;
-            $obj->monto_cierre = $total;
+            $obj->fecha_cierre = $date;
+            //$obj->monto_cierre = $total;
             $obj->save();
 
             return response()->json($obj);

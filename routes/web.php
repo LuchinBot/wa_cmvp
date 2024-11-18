@@ -175,6 +175,12 @@ Route::group(["middleware"=>"auth"], function(){
     Route::get('ventas/{id}/edit',[App\Http\Controllers\VentaController::class, 'edit'])->name('ventas.edit');
     Route::delete('ventas/{id}/destroy',[App\Http\Controllers\VentaController::class, 'destroy'])->name('ventas.destroy');
 
+    Route::get('productos', [App\Http\Controllers\ProductoController::class, 'index'])->name('productos');
+    Route::get('productos/grilla', [App\Http\Controllers\ProductoController::class, 'grilla'])->name('productos.grilla');
+    Route::post('productos/store', [App\Http\Controllers\ProductoController::class, 'store'])->name('productos.store');
+    Route::get('productos/{id}/edit',[App\Http\Controllers\ProductoController::class, 'edit'])->name('productos.edit');
+    Route::delete('productos/{id}/destroy',[App\Http\Controllers\ProductoController::class, 'destroy'])->name('productos.destroy');
+
 });
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);

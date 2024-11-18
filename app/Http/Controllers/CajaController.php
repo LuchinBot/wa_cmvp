@@ -130,6 +130,7 @@ class CajaController extends Controller
     {
         $usuario = Auth::id();
         $date = Carbon::now();
+        $total = 0;
 
         /* Calcular el monto total de cierre de esa caja
         $ventas = Venta::where('codcaja', $id)->get();
@@ -143,16 +144,20 @@ class CajaController extends Controller
             ], 400);
         }
         */
-
+        // Caja chica que se cerrará
+        $Caja = Caja::findOrFail($id);
+        $total = $Caja->sum('monto_cierre');
         try {
-            $obj = Caja::findOrFail($id);
-            $obj->estado = 0;
-            $obj->codusuario_cierre = $usuario;
-            $obj->fecha_cierre = $date;
-            //$obj->monto_cierre = $total;
-            $obj->save();
+            $Caja->estado = 0;
+            $Caja->codusuario_cierre = $usuario;
+            $Caja->fecha_cierre = $date;
+            $Caja->save();
 
-            return response()->json($obj);
+            $CajaPrinciapl = Caja::where('estado',1)->where('codtipo_caja',1)->first();
+            $CajaPrinciapl->monto_cierre += $total;
+            $CajaPrinciapl->save();
+
+            return response()->json($CajaPrinciapl);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al cerrar la caja: ' . $e->getMessage()], 500);
         }

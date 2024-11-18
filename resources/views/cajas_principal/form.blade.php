@@ -18,16 +18,10 @@
         </div>
     </div>
 </form>
-<style>
-    #table_especialidad.table th,
-    #table_especialidad.table td {
-        padding: .35rem;
-    }
-</style>
 
 <script>
-    var _name_module_{{ $table_name }} = "{{ $modulo }}";
-    var _name_tabla_{{ $table_name }} = "{{ $table_name }}";
-    var _prefix_{{ $table_name }} = "{{ $prefix }}";
-    var _path_controller_{{ $table_name }} = "{{ $pathController }}";
+    var _name_module_caja= "{{ $modulo }}";
+    var _name_tabla_caja = "{{ $table_name }}";
+    var _prefix_caja = "{{ $prefix }}";
+    var _path_controller_cajas_principal = "{{ $pathController }}";
 </script>

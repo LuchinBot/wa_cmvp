@@ -1,27 +1,27 @@
-if (typeof _path_controller_cajas_principal === "undefined")
-    _path_controller_cajas_principal = "cajas_principal";
-console.log(_path_controller_cajas_principal);
+if (typeof _path_controller_producto === "undefined")
+    _path_controller_producto = "productos";
+console.log(_path_controller_producto);
 
 /**
  * Botones
  */
-$("#btn-new[data-controller='" + _path_controller_cajas_principal + "']").on(
+$("#btn-new[data-controller='" + _path_controller_producto + "']").on(
     "click",
     function (e) {
         e.preventDefault();
-        form.get(_path_controller_cajas_principal).nuevo();
-        console.log(form.get(_path_controller_cajas_principal));
+        form.get(_path_controller_producto).nuevo();
+        console.log(form.get(_path_controller_producto));
     }
 );
 
-$("#btn-edit[data-controller='" + _path_controller_cajas_principal + "']").on(
+$("#btn-edit[data-controller='" + _path_controller_producto + "']").on(
     "click",
     function (e) {
         e.preventDefault();
         var id = grilla.get_id(_name_tabla_caja);
 
         if (id != null) {
-            form.get(_path_controller_cajas_principal).editar(id);
+            form.get(_path_controller_producto).editar(id);
         } else {
             ventana.alert({
                 titulo: "Ups..!",
@@ -32,13 +32,13 @@ $("#btn-edit[data-controller='" + _path_controller_cajas_principal + "']").on(
     }
 );
 
-$("#btn-delete[data-controller='" + _path_controller_cajas_principal + "']").on(
+$("#btn-delete[data-controller='" + _path_controller_producto + "']").on(
     "click",
     function (e) {
         e.preventDefault();
         var id = grilla.get_id(_name_tabla_caja);
         if (id != null) {
-            form.get(_path_controller_cajas_principal).eliminar(id);
+            form.get(_path_controller_producto).eliminar(id);
         } else {
             ventana.alert({
                 titulo: "Ups..!",
@@ -55,9 +55,7 @@ $(document).on("keydown", function (e) {
         e.preventDefault();
         e.stopPropagation();
         $(
-            "#btn-new[data-controller='" +
-                _path_controller_cajas_principal +
-                "']"
+            "#btn-new[data-controller='" + _path_controller_producto + "']"
         ).trigger("click");
     }
 });
