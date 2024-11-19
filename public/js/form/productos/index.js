@@ -18,7 +18,7 @@ $("#btn-edit[data-controller='" + _path_controller_producto + "']").on(
     "click",
     function (e) {
         e.preventDefault();
-        var id = grilla.get_id(_name_tabla_caja);
+        var id = grilla.get_id(_name_tabla_producto);
 
         if (id != null) {
             form.get(_path_controller_producto).editar(id);
@@ -36,7 +36,7 @@ $("#btn-delete[data-controller='" + _path_controller_producto + "']").on(
     "click",
     function (e) {
         e.preventDefault();
-        var id = grilla.get_id(_name_tabla_caja);
+        var id = grilla.get_id(_name_tabla_producto);
         if (id != null) {
             form.get(_path_controller_producto).eliminar(id);
         } else {

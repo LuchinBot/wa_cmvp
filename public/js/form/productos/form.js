@@ -43,26 +43,6 @@ form.register(_path_controller_producto, {
                 $.each(response, function (k, v) {
                     $("#" + k, $self._form).val(v);
                 });
-
-                $("#codtipo_doc_ident" + _prefix_caja).val(
-                    response.persona_natural.codtipo_documento_identidad
-                );
-                $("#nro_doc_caja" + _prefix_caja).val(
-                    response.persona_natural.numero_documento_identidad
-                );
-                $("#nombres_caja" + _prefix_caja).val(
-                    response.persona_natural.nombre_completo
-                );
-
-                $(".file_upload").html(
-                    "<a href='" +
-                        response.url_cv +
-                        "' target='_blank'>" +
-                        response.curriculum_vitae +
-                        "</a>"
-                );
-
-                setEspecialides(response.especialidad_caja);
             },
             complete: function () {
                 loading("complete");
@@ -187,7 +167,7 @@ form.register(_path_controller_producto, {
         }
     },
     callback: function (data) {
-        grilla.reload(_name_tabla_caja);
+        grilla.reload(_name_tabla_producto);
     },
     reset: function () {
         $(":input", this._form).val("");

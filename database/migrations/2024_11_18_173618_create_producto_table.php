@@ -16,11 +16,12 @@ class CreateProductoTable extends Migration
         Schema::create('producto', function (Blueprint $table) {
             $table->increments('codproducto');
             $table->string('descripcion',255);
-            $table->char('tipo_producto',1);
+            $table->text('nota')->nullable();
             $table->decimal('precio',10, 2);
-            $table->integer('stock');
-            $table->char('controla_stock',1);
+            $table->integer('stock')->nullable();
+            $table->char('controla_stock',1)->default('N');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

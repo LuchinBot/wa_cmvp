@@ -41,7 +41,7 @@ class ProductoController extends Controller
         $datos["pathController"]    = $this->path_controller;
         $datos["prefix"]            = "";
         $datos["modulo"]            = $this->modulo;
-        $datos['botones']           = ["new" => 1, "delete" => 1];
+        $datos['botones']           = ["new" => 1, "delete" => 1, "edit" => 1];
 
         $datos["tabla_grid"]        = $this->dataTableServer->createTable(false);
         $datos["script_grid"]       = $this->dataTableServer->createScript();;
@@ -55,22 +55,44 @@ class ProductoController extends Controller
         $objeto = Producto::get();
         return  DataTables::of($objeto)
             ->addIndexColumn()
+            ->addColumn("controla_stock", function ($row) {
+                $controla_stock = ($row->controla_stock == 'S') ? "SI" : "NO";
+                $clase  = ($row->controla_stock == 'S') ? "success" : "danger";
+                return "<span style='width:100%;' class='badge bg-{$clase}'>{$controla_stock}</span>";
+            })
+            ->rawColumns(['controla_stock'])
             ->make(true);
     }
 
     public function store(Request $request)
     {
-        //
-        //$obj->fill($request->all());
-        //$obj->save();
-
-        //return response()->json($obj);
+        $this->validate($request, [
+            'descripcion' => ['required', 'max:250'],
+            'precio' => ['required', 'numeric'], // Aseguramos que el precio sea un número
+        ], [
+            'descripcion.required' => 'La descripción es obligatoria.',
+            'descripcion.max' => 'La descripción no debe exceder los 250 caracteres.',
+            'precio.required' => 'El precio es obligatorio.',
+            'precio.numeric' => 'El precio debe ser un valor numérico.',
+        ]);
+    
+        $controla_stock = $request->has('controla_stock') ? 'S' : 'N';
+    
+        $obj = Producto::find($request->input("cod{$this->name_table}")) ?? new Producto;
+        
+        $obj->fill($request->except('controla_stock')); 
+        $obj->controla_stock = $controla_stock;
+    
+        $obj->save();
+            return response()->json($obj);
     }
+    
 
 
     public function edit($id)
     {
-        //
+        $obj    =   Producto::find($id);
+        return response()->json($obj);
     }
 
     public function destroy($id)
@@ -78,6 +100,5 @@ class ProductoController extends Controller
         $obj = Producto::findOrFail($id);
         $obj->delete();
         return response()->json($obj);
-
     }
 }
