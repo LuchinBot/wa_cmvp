@@ -19,6 +19,8 @@ Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout
 Route::group(["middleware"=>"auth"], function(){
 	Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('cuota', [App\Http\Controllers\CuotasController::class, 'index'])->name('cuota');
+    Route::get('cuota/{id}/{estado}', [App\Http\Controllers\CuotasController::class, 'colegiado'])->name('cuota.colegiado');
 
     Route::get('ubigeo/provincia', [App\Http\Controllers\UbigeoController::class, 'provincia'])->name('ubigeo.provincia');
     Route::get('ubigeo/distrito', [App\Http\Controllers\UbigeoController::class, 'distrito'])->name('ubigeo.distrito');
