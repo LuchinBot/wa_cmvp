@@ -58,12 +58,12 @@ class CajaController extends Controller
         $objeto = Caja::with(["usuario_apertura"])->where('codusuario_apertura', $usuario)->where('codtipo_caja', 2)->get();
         return  DataTables::of($objeto)
             ->addIndexColumn()
-            ->addColumn("estado", function ($row) {
-                $estado = ($row->estado == 1) ? "Abierta" : "Cerrado";
-                $clase  = ($row->estado == 1) ? "success" : "danger";
+            ->addColumn("abierto", function ($row) {
+                $estado = ($row->abierto == 'S') ? "Abierta" : "Cerrado";
+                $clase  = ($row->abierto == 'S') ? "success" : "danger";
                 return "<span style='width:100%;' class='badge bg-{$clase}'>{$estado}</span>";
             })
-            ->rawColumns(['estado'])
+            ->rawColumns(['abierto'])
             ->make(true);
     }
 
@@ -71,7 +71,7 @@ class CajaController extends Controller
     {
         $usuario = Auth::id();
         // Caja principal
-        $cajaPrincipal = Caja::where('estado', 1)
+        $cajaPrincipal = Caja::where('abierto', 'S')
             ->where('codtipo_caja', 1)
             ->first();
         if (!$cajaPrincipal) {
@@ -82,7 +82,7 @@ class CajaController extends Controller
         }
 
         // Caja chica
-        $cajaChica = Caja::where('estado', 1)
+        $cajaChica = Caja::where('abierto', 'S')
             ->where('codtipo_caja', 2)
             ->where('codusuario_apertura', $usuario)
             ->first();
@@ -107,7 +107,7 @@ class CajaController extends Controller
         $obj = Caja::find($request->input("cod{$this->name_table}"));
         if (is_null($obj)) {
             $obj = new Caja();
-            $obj->estado = 1;
+            $obj->abierto = 'S';
             $obj->codusuario_apertura = $usuario;
             $obj->monto_cierre = $monto_actual;
             $obj->codtipo_caja = 2;
@@ -148,12 +148,12 @@ class CajaController extends Controller
         $Caja = Caja::findOrFail($id);
         $total = $Caja->sum('monto_cierre');
         try {
-            $Caja->estado = 0;
+            $Caja->abierto = 'N';
             $Caja->codusuario_cierre = $usuario;
             $Caja->fecha_cierre = $date;
             $Caja->save();
 
-            $CajaPrinciapl = Caja::where('estado',1)->where('codtipo_caja',1)->first();
+            $CajaPrinciapl = Caja::where('abierto','S')->where('codtipo_caja',1)->first();
             $CajaPrinciapl->monto_cierre += $total;
             $CajaPrinciapl->save();
 

@@ -58,19 +58,19 @@ class CajaPrincipalController extends Controller
         $objeto = Caja::with(["usuario_apertura", "tipo_caja"])->where('codtipo_caja', 1)->get();
         return  DataTables::of($objeto)
             ->addIndexColumn()
-            ->addColumn("estado", function ($row) {
-                $estado = ($row->estado == 1) ? "Abierta" : "Cerrado";
-                $clase  = ($row->estado == 1) ? "success" : "danger";
+            ->addColumn("abierto", function ($row) {
+                $estado = ($row->abierto == 'S') ? "Abierta" : "Cerrado";
+                $clase  = ($row->abierto == 'S') ? "success" : "danger";
                 return "<span style='width:100%;' class='badge bg-{$clase}'>{$estado}</span>";
             })
-            ->rawColumns(['estado'])
+            ->rawColumns(['abierto'])
             ->make(true);
     }
 
     public function store(Request $request)
     {
         $usuario = Auth::id();
-        $cajaPrincipal = Caja::where('estado', 1)
+        $cajaPrincipal = Caja::where('abierto', 'S')
             ->where('codtipo_caja', 1)
             ->first();
         // Si hay una caja principal abierta
@@ -94,7 +94,7 @@ class CajaPrincipalController extends Controller
         $obj = Caja::find($request->input("cod{$this->name_table}"));
         if (is_null($obj)) {
             $obj = new Caja();
-            $obj->estado = 1;
+            $obj->abierto = 'S';
             $obj->codusuario_apertura = $usuario;
             $obj->monto_cierre = $monto_actual;
             $obj->codtipo_caja = 1;
@@ -133,7 +133,7 @@ class CajaPrincipalController extends Controller
         try {
             // Subir los cambios del cierre
             $obj = Caja::findOrFail($id);
-            $obj->estado = 0;
+            $obj->abierto = 'N';
             $obj->codusuario_cierre = $usuario;
             $obj->fecha_cierre = $date;
             //$obj->monto_cierre = $total;

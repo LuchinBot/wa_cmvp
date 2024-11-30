@@ -11,7 +11,7 @@ class Caja extends Model
     protected $table        = "caja";
     protected $primaryKey   = "codcaja";
 
-    protected $fillable     = ["codusuario_apertura", "codusuario_cierre", "idtipo_caja", "fecha_apertura","fecha_cierre","monto_apertura","monto_cierre","estado"];
+    protected $fillable     = ["codusuario_apertura", "codusuario_cierre", "idtipo_caja", "fecha_apertura","fecha_cierre","monto_apertura","monto_cierre","abierto"];
     protected $hidden       = ['created_at', 'updated_at', "deleted_at"];
 
     public function usuario_apertura()
