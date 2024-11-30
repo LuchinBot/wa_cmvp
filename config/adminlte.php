@@ -440,6 +440,16 @@ return [
             'icon'    => 'fas fa-fw fa-desktop',
             'submenu' => [
                 [
+                    'text' => 'Dias festivos',
+                    'url'  => 'dias_festivos',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'Cuotas',
+                    'url'  => 'cuotas',
+                    'icon' => 'fas fa-fw fa-list',
+                ],
+                [
                     'text' => 'Colegiado',
                     'url'  => 'colegiados',
                     'icon' => 'fas fa-fw fa-list',

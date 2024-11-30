@@ -19,8 +19,9 @@ Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout
 Route::group(["middleware"=>"auth"], function(){
 	Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('cuota', [App\Http\Controllers\CuotasController::class, 'index'])->name('cuota');
-    Route::get('cuota/{id}/{estado}', [App\Http\Controllers\CuotasController::class, 'colegiado'])->name('cuota.colegiado');
+    //Route::get('cuota', [App\Http\Controllers\CuotasController::class, 'index'])->name('cuota');
+    Route::get('cuota/{id}/{estado}/{total}', [App\Http\Controllers\CuotasController::class, 'colegiado'])->name('cuota');
+    Route::get('habilitado/{id}', [App\Http\Controllers\CuotasController::class, 'habilitado'])->name('habilitado');
 
     Route::get('ubigeo/provincia', [App\Http\Controllers\UbigeoController::class, 'provincia'])->name('ubigeo.provincia');
     Route::get('ubigeo/distrito', [App\Http\Controllers\UbigeoController::class, 'distrito'])->name('ubigeo.distrito');
@@ -183,6 +184,11 @@ Route::group(["middleware"=>"auth"], function(){
     Route::get('productos/{id}/edit',[App\Http\Controllers\ProductoController::class, 'edit'])->name('productos.edit');
     Route::delete('productos/{id}/destroy',[App\Http\Controllers\ProductoController::class, 'destroy'])->name('productos.destroy');
 
+    Route::get('dias_festivos', [App\Http\Controllers\DiasFestivosController::class, 'index'])->name('dias_festivos');
+    Route::get('dias_festivos/grilla', [App\Http\Controllers\DiasFestivosController::class, 'grilla'])->name('dias_festivos.grilla');
+    Route::post('dias_festivos/store', [App\Http\Controllers\DiasFestivosController::class, 'store'])->name('dias_festivos.store');
+    Route::get('dias_festivos/{id}/edit',[App\Http\Controllers\DiasFestivosController::class, 'edit'])->name('dias_festivos.edit');
+    Route::delete('dias_festivos/{id}/destroy',[App\Http\Controllers\DiasFestivosController::class, 'destroy'])->name('dias_festivos.destroy');
 });
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
