@@ -18,6 +18,7 @@ class CreateDiasFestivosTable extends Migration
             $table->string('titulo',255);
             $table->text('descripcion')->nullable();
             $table->date('fecha');
+            $table->string("imagen", 60)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

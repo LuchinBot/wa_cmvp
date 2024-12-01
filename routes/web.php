@@ -187,6 +187,7 @@ Route::group(["middleware"=>"auth"], function(){
     Route::get('dias_festivos', [App\Http\Controllers\DiasFestivosController::class, 'index'])->name('dias_festivos');
     Route::get('dias_festivos/grilla', [App\Http\Controllers\DiasFestivosController::class, 'grilla'])->name('dias_festivos.grilla');
     Route::post('dias_festivos/store', [App\Http\Controllers\DiasFestivosController::class, 'store'])->name('dias_festivos.store');
+    Route::post('dias_festivos/upload_file', [App\Http\Controllers\DiasFestivosController::class, 'uploadFile'])->name('dias_festivos.upload_file');
     Route::get('dias_festivos/{id}/edit',[App\Http\Controllers\DiasFestivosController::class, 'edit'])->name('dias_festivos.edit');
     Route::delete('dias_festivos/{id}/destroy',[App\Http\Controllers\DiasFestivosController::class, 'destroy'])->name('dias_festivos.destroy');
 });
