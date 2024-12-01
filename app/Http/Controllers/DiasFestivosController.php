@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 
 use Yajra\DataTables\DataTables;
 use App\Actions\DataTableInternal;
+use App\Actions\DiaFestivo;
 
 use Illuminate\Support\Str as Str;
 use Illuminate\Validation\ValidationException;
@@ -135,5 +136,9 @@ class DiasFestivosController extends Controller
         $obj    =   DiasFestivos::findOrFail($id);
         $obj->delete();
         return response()->json();
+    }
+    public function verificarDia()
+    {
+        return response()->json((new DiaFestivo())->verificarDía());
     }
 }

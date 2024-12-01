@@ -190,6 +190,7 @@ Route::group(["middleware"=>"auth"], function(){
     Route::post('dias_festivos/upload_file', [App\Http\Controllers\DiasFestivosController::class, 'uploadFile'])->name('dias_festivos.upload_file');
     Route::get('dias_festivos/{id}/edit',[App\Http\Controllers\DiasFestivosController::class, 'edit'])->name('dias_festivos.edit');
     Route::delete('dias_festivos/{id}/destroy',[App\Http\Controllers\DiasFestivosController::class, 'destroy'])->name('dias_festivos.destroy');
+    Route::get('dias_festivos/verificar',[App\Http\Controllers\DiasFestivosController::class, 'verificarDia'])->name('dias_festivos.verificarDia');
 });
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
