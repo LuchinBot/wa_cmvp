@@ -70,16 +70,6 @@ class CajaController extends Controller
     public function store(Request $request)
     {
         $usuario = Auth::id();
-        // Caja principal
-        $cajaPrincipal = Caja::where('abierto', 'S')
-            ->where('codtipo_caja', 1)
-            ->first();
-        if (!$cajaPrincipal) {
-            return response()->json([
-                'message' => 'No existe una caja principal abierta.',
-                'caja_abierta' => $cajaPrincipal
-            ], 400);
-        }
 
         // Caja chica
         $cajaChica = Caja::where('abierto', 'S')
