@@ -16,7 +16,7 @@ class CreateCuotaTable extends Migration
         Schema::create('cuota', function (Blueprint $table) {
             $table->increments('codcuota');
             $table->integer('codcolegiado');
-            $table->string('mes',50);
+            $table->char('mes',2);
             $table->year('anio');
             $table->timestamps();
             $table->softDeletes();

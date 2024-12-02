@@ -68,7 +68,7 @@ class ProductoController extends Controller
     {
         $this->validate($request, [
             'descripcion' => ['required', 'max:250'],
-            'precio' => ['required', 'numeric'], // Aseguramos que el precio sea un número
+            'precio' => ['required', 'numeric'],
         ], [
             'descripcion.required' => 'La descripción es obligatoria.',
             'descripcion.max' => 'La descripción no debe exceder los 250 caracteres.',

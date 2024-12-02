@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-8">
+                        <div class="col-md-11">
                             <label>Cargar Flayer (Ancho:{{$dimension_flayer["ancho"]}}px, Alto:{{$dimension_flayer["alto"]}}px)</label>
                             <div class="custom-file" style="height:25px">
                                 <input type="file" class="custom-file-input border" accept="image/jpg, image/png, image/jpeg" onchange="cargar_flayer(this, 'flayer_prev')" id="file_flayer{{$prefix}}" name="file_flayer">
@@ -38,7 +38,7 @@
                             <span class="imagen error_text_o_o d-none" role="alert"></span>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-1">
                             <center class="mb-0">
                                 <img class="img-thumbnail load_photo" style="" id="flayer_prev{{$prefix}}" src="{{$default_flayer}}">
                             </center>
