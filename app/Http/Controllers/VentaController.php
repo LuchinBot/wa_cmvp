@@ -72,10 +72,10 @@ class VentaController extends Controller
         $date = Carbon::now();
         $cajaAbierta = '';
 
-        if ($request->input('codtipo_caja') == 1) {
-            $cajaAbierta = Caja::where('estado', 1)->first();
+        if ($request->input('codtipo_caja') == 'S') {
+            $cajaAbierta = Caja::where('abierto', 'S')->first();
         } else {
-            $cajaAbierta = Caja::where('estado', 1)
+            $cajaAbierta = Caja::where('abierto', 'S')
                 ->where('codtipo_caja', 2)
                 ->where('codusuario_apertura', $usuario)
                 ->first();
@@ -135,7 +135,7 @@ class VentaController extends Controller
         $obj = Venta::findOrFail($id);
         $importe = $obj->total;
         $CajaAfectada = Caja::findOrFail($obj->codcaja);
-        if ($CajaAfectada->estado == 1) {
+        if ($CajaAfectada->abierto == 'S') {
 
             if ($CajaAfectada->monto_cierre >= $importe) {
                 // Actualizar monto de cierre

@@ -35,7 +35,7 @@ class Caja extends Model
            ,["descripcion"=>"M. Actual"     ,"ancho"=>"20%", "jsColumn"=>["data"=>"monto_cierre"]]
            ,["descripcion"=>"F. Apertura"     ,"ancho"=>"20%", "jsColumn"=>["data"=>"fecha_apertura"]]
            ,["descripcion"=>"F. Cierre"     ,"ancho"=>"20%", "jsColumn"=>["data"=>"fecha_cierre"]]
-           ,["descripcion"=>"Estado"       ,"ancho"=>"15%", "jsColumn"=>["data"=>"estado", "orderable"=>false, "searchable"=>false]]
+           ,["descripcion"=>"Estado"       ,"ancho"=>"15%", "jsColumn"=>["data"=>"abierto", "orderable"=>false, "searchable"=>false]]
        ];
     }
 }
