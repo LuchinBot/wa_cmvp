@@ -193,13 +193,13 @@ Route::group(["middleware"=>"auth"], function(){
     Route::get('dias_festivos/verificar',[App\Http\Controllers\DiasFestivosController::class, 'verificarDia'])->name('dias_festivos.verificarDia');
 
     
-    Route::get('cuotas', [App\Http\Controllers\CuotasController::class, 'index'])->name('cuotas');
-    Route::get('cuotas/get_data', [App\Http\Controllers\CuotasController::class, 'getData'])->name('cuotas.get_data');
-    Route::get('cuotas/save_data', [App\Http\Controllers\CuotasController::class, 'saveData'])->name('cuotas.save_data');
-    Route::get('cuotas/grilla', [App\Http\Controllers\CuotasController::class, 'grilla'])->name('cuotas.grilla');
-    Route::post('cuotas/store', [App\Http\Controllers\CuotasController::class, 'store'])->name('cuotas.store');
-    Route::get('cuotas/{id}/edit',[App\Http\Controllers\CuotasController::class, 'edit'])->name('cuotas.edit');
-    Route::delete('cuotas/{id}/destroy',[App\Http\Controllers\CuotasController::class, 'destroy'])->name('cuotas.destroy');
+    Route::get('apertura_cuotas', [App\Http\Controllers\CuotasController::class, 'index'])->name('cuotas');
+    Route::get('apertura_cuotas/get_data', [App\Http\Controllers\CuotasController::class, 'getData'])->name('cuotas.get_data');
+    Route::get('apertura_cuotas/save_data', [App\Http\Controllers\CuotasController::class, 'saveData'])->name('cuotas.save_data');
+    Route::get('apertura_cuotas/grilla', [App\Http\Controllers\CuotasController::class, 'grilla'])->name('cuotas.grilla');
+    Route::post('apertura_cuotas/store', [App\Http\Controllers\CuotasController::class, 'store'])->name('cuotas.store');
+    Route::get('apertura_cuotas/{id}/edit',[App\Http\Controllers\CuotasController::class, 'edit'])->name('cuotas.edit');
+    Route::delete('apertura_cuotas/{id}/destroy',[App\Http\Controllers\CuotasController::class, 'destroy'])->name('cuotas.destroy');
 
 });
 

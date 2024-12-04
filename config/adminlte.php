@@ -445,7 +445,7 @@ return [
                     'icon' => 'fas fa-fw fa-list',
                 ],
                 [
-                    'text' => 'Cuotas',
+                    'text' => 'Apertura de cuota',
                     'url'  => 'cuotas',
                     'icon' => 'fas fa-fw fa-list',
                 ],

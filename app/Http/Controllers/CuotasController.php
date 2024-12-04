@@ -13,7 +13,7 @@ use App\Actions\DataTableInternal;
 
 class CuotasController extends Controller
 {
-    public $modulo                  = "Cuotas";
+    public $modulo                  = " Apertura de cuota";
     public $path_controller         = "cuotas";
     public $model                   = null;
     public $name_table              = "";
