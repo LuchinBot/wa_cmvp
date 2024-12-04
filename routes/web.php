@@ -20,8 +20,8 @@ Route::group(["middleware"=>"auth"], function(){
 	Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     //Route::get('cuota', [App\Http\Controllers\CuotasController::class, 'index'])->name('cuota');
-    Route::get('cuota/{id}/{estado}/{total}', [App\Http\Controllers\CuotasController::class, 'colegiado'])->name('cuota');
-    Route::get('habilitado/{id}', [App\Http\Controllers\CuotasController::class, 'habilitado'])->name('habilitado');
+    //Route::get('cuota/{id}/{estado}/{total}', [App\Http\Controllers\CuotasController::class, 'colegiado'])->name('cuota');
+    //Route::get('habilitado/{id}', [App\Http\Controllers\CuotasController::class, 'habilitado'])->name('habilitado');
 
     Route::get('ubigeo/provincia', [App\Http\Controllers\UbigeoController::class, 'provincia'])->name('ubigeo.provincia');
     Route::get('ubigeo/distrito', [App\Http\Controllers\UbigeoController::class, 'distrito'])->name('ubigeo.distrito');
@@ -191,6 +191,16 @@ Route::group(["middleware"=>"auth"], function(){
     Route::get('dias_festivos/{id}/edit',[App\Http\Controllers\DiasFestivosController::class, 'edit'])->name('dias_festivos.edit');
     Route::delete('dias_festivos/{id}/destroy',[App\Http\Controllers\DiasFestivosController::class, 'destroy'])->name('dias_festivos.destroy');
     Route::get('dias_festivos/verificar',[App\Http\Controllers\DiasFestivosController::class, 'verificarDia'])->name('dias_festivos.verificarDia');
+
+    
+    Route::get('cuotas', [App\Http\Controllers\CuotasController::class, 'index'])->name('cuotas');
+    Route::get('cuotas/get_data', [App\Http\Controllers\CuotasController::class, 'getData'])->name('cuotas.get_data');
+    Route::get('cuotas/save_data', [App\Http\Controllers\CuotasController::class, 'saveData'])->name('cuotas.save_data');
+    Route::get('cuotas/grilla', [App\Http\Controllers\CuotasController::class, 'grilla'])->name('cuotas.grilla');
+    Route::post('cuotas/store', [App\Http\Controllers\CuotasController::class, 'store'])->name('cuotas.store');
+    Route::get('cuotas/{id}/edit',[App\Http\Controllers\CuotasController::class, 'edit'])->name('cuotas.edit');
+    Route::delete('cuotas/{id}/destroy',[App\Http\Controllers\CuotasController::class, 'destroy'])->name('cuotas.destroy');
+
 });
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);

@@ -148,7 +148,6 @@ class CuotasColegiado
         } else {
             $obj->estado_colegiado = 'H';
             $msg = 'Colegiado Habilitado';
-
         }
         $obj->save();
 
@@ -156,7 +155,56 @@ class CuotasColegiado
             'status' => true,
             'message' => $msg
         ];
-        
+
         return response()->json($response);
+    }
+
+    public function pagarCuota($desde, $hasta)
+    {
+        list($mesDesde, $anioDesde) = explode('/', $desde);
+        list($mesHasta, $anioHasta) = explode('/', $hasta);
+
+        $mesDesde = intval($mesDesde);
+        $anioDesde = intval($anioDesde);
+        $mesHasta = intval($mesHasta);
+        $anioHasta = intval($anioHasta);
+
+        for ($anio = $anioDesde; $anio <= $anioHasta; $anio++) {
+            $mesInicio = ($anio == $anioDesde) ? $mesDesde : 1;
+            $mesFin = ($anio == $anioHasta) ? $mesHasta : 12;
+
+            for ($mes = $mesInicio; $mes <= $mesFin; $mes++) {
+                // Agregar a la tabla Cuota uwu
+                $obj = new Cuota();
+                if ($obj) {
+                    $obj->codcolegiado = $this->codcolegiado;
+                    $obj->mes = $mes;
+                    $obj->anio = $anio;
+                }
+                $obj->save();
+            }
+        }
+    }
+    public function anularCuota($desde, $hasta)
+    {
+        list($mesDesde, $anioDesde) = explode('/', $desde);
+        list($mesHasta, $anioHasta) = explode('/', $hasta);
+
+        $mesDesde = intval($mesDesde);
+        $anioDesde = intval($anioDesde);
+        $mesHasta = intval($mesHasta);
+        $anioHasta = intval($anioHasta);
+
+        for ($anio = $anioDesde; $anio <= $anioHasta; $anio++) {
+            $mesInicio = ($anio == $anioDesde) ? $mesDesde : 1;
+            $mesFin = ($anio == $anioHasta) ? $mesHasta : 12;
+            for ($mes = $mesInicio; $mes <= $mesFin; $mes++) {
+                // Eliminar de la tabla Cuota uwu
+                Cuota::where('codcolegiado', $this->codcolegiado)
+                    ->where('mes', $mes)
+                    ->where('anio', $anio)
+                    ->delete();
+            }
+        }
     }
 }
