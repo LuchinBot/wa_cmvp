@@ -84,4 +84,12 @@ class CuotasController extends Controller
         return response()->json(['status' => true, 'data' => $obj]);
        
     }
+    public function colegiado($id, $type, $total)
+    {
+        return response()->json((new CuotasColegiado($id))->calculoCuotas($type, $total));
+    }
+    public function habilitado($id)
+    {
+        return response()->json((new CuotasColegiado($id))->calculoDeudas());
+    }
 }

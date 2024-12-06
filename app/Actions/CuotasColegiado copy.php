@@ -121,8 +121,6 @@ class CuotasColegiado
     {
         // Máximo mes para deuda
         $maxMes = 3;
-
-        // Verificar las cuotas pagadas y obtener meses pendientes
         $cuotasPagadas = Cuota::where('codcolegiado', $this->codcolegiado)
             ->where('anio', '<=', $this->anioActual)
             ->where('mes', '<=', $this->mesActual)
@@ -143,23 +141,19 @@ class CuotasColegiado
             }
         }
         $obj = Colegiado::find($this->codcolegiado);
-        if (count($mesesPendientes) > $obj->max_mes) {
+
+        if (count($mesesPendientes) > $maxMes) {
             $obj->estado_colegiado = 'I';
-            $obj->max_mes = 0;
             $msg = 'Colegiado Inhabilitado';
         } else {
             $obj->estado_colegiado = 'H';
             $msg = 'Colegiado Habilitado';
         }
-
-
-        // Guardar
         $obj->save();
 
         $response = [
             'status' => true,
-            'message' => $msg,
-            'data'=>$mesesPendientes
+            'message' => $msg
         ];
 
         return response()->json($response);
@@ -174,7 +168,7 @@ class CuotasColegiado
         $anioDesde = intval($anioDesde);
         $mesHasta = intval($mesHasta);
         $anioHasta = intval($anioHasta);
-        $count = 0;
+
         for ($anio = $anioDesde; $anio <= $anioHasta; $anio++) {
             $mesInicio = ($anio == $anioDesde) ? $mesDesde : 1;
             $mesFin = ($anio == $anioHasta) ? $mesHasta : 12;
@@ -187,14 +181,8 @@ class CuotasColegiado
                     $obj->mes = $mes;
                     $obj->anio = $anio;
                 }
-                $count++;
                 $obj->save();
             }
-        }
-        $obj = Colegiado::find($this->codcolegiado);
-        if($count == 12){
-            $obj->max_mes = 3;
-            $obj->save();
         }
     }
     public function anularCuota($desde, $hasta)
